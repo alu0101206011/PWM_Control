@@ -32,7 +32,7 @@
  *  @param duty
  *
  */
-void pwm_init(uint8_t channel, uint8_t frecuency, uint8_t duty);
+void pwm_init(uint8_t channel, uint8_t frecuency, uint8_t period, uint8_t duty);
 
 /*! PWM init period and cycles
  *
@@ -43,7 +43,7 @@ void pwm_init(uint8_t channel, uint8_t frecuency, uint8_t duty);
  *  @param period
  *
  */
-void pwm_init_c(uint8_t channel, uint8_t clock, uint8_t period, uint8_t duty);
+void pwm_init_c(uint8_t channel, uint8_t period, uint8_t duty);
 
 /*! PWM polarity
  *
@@ -109,10 +109,13 @@ void pwm_set_channel(uint8_t channel);
  */
 void pwm_set_prescale(uint8_t prescale);
 
-/*! PWM Frecuency to period
+/*! PWM Set frecuency 
  *
+ *  @brief Function to set frecuency
  *
+ *  @param frecuency
+ * 
  */
-uint16_t pwm_frecuency_to_period(uint8_t frecuency);
+void pwm_set_frecuency(uint8_t frecuency);
 
 #endif
