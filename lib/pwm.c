@@ -22,12 +22,12 @@ uint8_t percentage_flag = 0;
  *  @param duty
  *
  */
-void pwm_init(uint8_t channel, uint8_t frecuency, uint8_t addr_duty) {
-    uint8_t period = pwm_frecuency_to_period(frecuency);
+void pwm_init(uint8_t channel, uint8_t frecuency, uint8_t period, uint8_t duty) {
+    pwm_set_frecuency(frecuency);
     pwm_set_channel(channel);
-    pwm_frecuency_to_period(50);
     pwm_set_prescale(5);
     pwm_set_alignment(0);
+    pwm_set_period(period);
     pwm_set_duty_percentage(20);
 }
 
@@ -41,11 +41,14 @@ void pwm_init(uint8_t channel, uint8_t frecuency, uint8_t addr_duty) {
  *
  */
 void pwm_init_c(uint8_t channel, uint8_t period, uint8_t duty) {
+	serial_print("\nEntré en init c\n");
     pwm_set_channel(channel);
-    pwm_set_prescale(5);
-    pwm_set_alignment(0);
-    pwm_set_period(100);
-    pwm_set_duty(30);
+    //pwm_set_prescale(0);
+    //pwm_set_alignment(0);
+    serial_print("\nSalí de elegir canal\n");
+    pwm_set_polarity(1);
+    pwm_set_period(period);
+    pwm_set_duty(duty);
 }
 
 /*! PWM polarity
@@ -91,8 +94,10 @@ void pwm_set_alignment(uint8_t alignment) {
  *
  */
 void pwm_set_duty(uint8_t duty) {
-    percentage_flag = 0;
-    _io_ports[addr_duty] = duty;
+	if (duty > _io_ports[addr_period])
+		serial_print("\nError duty can't be greater than period\n");
+	_io_ports[addr_duty] = duty;
+	serial_print("\nSe puso duty\n");
 }
 
 /*! PWM percent
@@ -103,7 +108,6 @@ void pwm_set_duty(uint8_t duty) {
  *
  */
 void pwm_set_duty_percentage(uint8_t percentage) {
-    percentage_flag = 1;
     uint16_t acc = _io_ports[addr_period] * percentage;
     uint8_t duty_per = acc / 100;
     _io_ports[addr_duty] = duty_per;
@@ -118,6 +122,7 @@ void pwm_set_duty_percentage(uint8_t percentage) {
  */
 void pwm_set_period(uint8_t period) {
     _io_ports[addr_period] = period;
+    serial_print("\nSe puso periodo\n");
 }
 
 /*! PWM Set channel
@@ -134,6 +139,7 @@ void pwm_set_channel(uint8_t new_channel) {
         _io_ports[M6812_PWEN] = _io_ports[M6812_PWEN] | M6812B_PWEN0;
         addr_period = M6812_PWPER0;
         addr_duty = M6812_PWDTY0;
+        serial_print("\nElegi canal 0\n");
         break;
     case 1:
         _io_ports[M6812_PWEN] = _io_ports[M6812_PWEN] | M6812B_PWEN1;
@@ -152,6 +158,7 @@ void pwm_set_channel(uint8_t new_channel) {
         break;
     default: break;
     }
+    serial_print("\nsaliendo canal 0\n");
 }
 
 /*! PWM Set prescale
@@ -177,6 +184,6 @@ void pwm_set_prescale(uint8_t prescale) {
  *
  *
  */
-uint16_t pwm_frecuency_to_period(uint8_t frecuency) {
-
+void pwm_set_frecuency(uint8_t frecuency) {
+	//Se debe llamar al prescale
 }

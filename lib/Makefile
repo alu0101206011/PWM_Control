@@ -31,7 +31,7 @@ BASEDIR=$(SRCDIR)/..
 
 include $(BASEDIR)/config/make.defs
 
-CSRCS=sio.c lsqrt.c lsqrt64.c sprintf.c printf.c premain.c timer.c
+CSRCS=sio.c lsqrt.c lsqrt64.c sprintf.c printf.c premain.c timer.c pwm.c
 
 OBJS=$(CSRCS:.c=.o)
 
