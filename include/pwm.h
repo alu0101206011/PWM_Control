@@ -118,4 +118,13 @@ void pwm_set_prescale(uint8_t prescale);
  */
 void pwm_set_frecuency(uint8_t frecuency);
 
+/*! PWM Upper power of two
+ *
+ *  @brief Function to Upper power of two
+ *
+ *  @param value
+ * 
+ */
+uint8_t upper_power_of_two(uint8_t value);
+
 #endif

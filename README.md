@@ -18,6 +18,8 @@ y copiar el `Makefile` del directorio Ejemplo.
 
 Al ejecutar el `Makefile`, cada `.c` se compila y enlaza para generar un `.elf`,
 que sería el ejecutable.
+Es necesario tener instalado el paquete m68hc11-gcc.
+
 Se genera también el `.s19` porque es el formato en que
 dicho ejecutable se envía, a través de la serial (Serial Port Term), a la placa ADAPT912DT60.
 

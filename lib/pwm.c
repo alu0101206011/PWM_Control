@@ -25,7 +25,6 @@ uint8_t percentage_flag = 0;
 void pwm_init(uint8_t channel, uint8_t frecuency, uint8_t period, uint8_t duty) {
     pwm_set_frecuency(frecuency);
     pwm_set_channel(channel);
-    pwm_set_prescale(5);
     pwm_set_alignment(0);
     pwm_set_period(period);
     pwm_set_duty_percentage(20);
@@ -41,11 +40,9 @@ void pwm_init(uint8_t channel, uint8_t frecuency, uint8_t period, uint8_t duty) 
  *
  */
 void pwm_init_c(uint8_t channel, uint8_t period, uint8_t duty) {
-	serial_print("\nEntré en init c\n");
     pwm_set_channel(channel);
-    //pwm_set_prescale(0);
-    //pwm_set_alignment(0);
-    serial_print("\nSalí de elegir canal\n");
+    pwm_set_prescale(0);
+    pwm_set_alignment(0);
     pwm_set_polarity(1);
     pwm_set_period(period);
     pwm_set_duty(duty);
@@ -139,7 +136,6 @@ void pwm_set_channel(uint8_t new_channel) {
         _io_ports[M6812_PWEN] = _io_ports[M6812_PWEN] | M6812B_PWEN0;
         addr_period = M6812_PWPER0;
         addr_duty = M6812_PWDTY0;
-        serial_print("\nElegi canal 0\n");
         break;
     case 1:
         _io_ports[M6812_PWEN] = _io_ports[M6812_PWEN] | M6812B_PWEN1;
@@ -158,7 +154,6 @@ void pwm_set_channel(uint8_t new_channel) {
         break;
     default: break;
     }
-    serial_print("\nsaliendo canal 0\n");
 }
 
 /*! PWM Set prescale
@@ -185,5 +180,27 @@ void pwm_set_prescale(uint8_t prescale) {
  *
  */
 void pwm_set_frecuency(uint8_t frecuency) {
-	//Se debe llamar al prescale
+    uint8_t prescale = 80000 / frecuency;
+    prescale = upper_power_of_two(prescale);
+	pwm_set_prescale(prescale);
 }
+
+
+uint8_t upper_power_of_two(uint8_t v) { 
+    if (0 >= v || 1 >= v || 2 >= v) {
+        return v;
+    } else if (4 >= v) {
+        return 4;
+    } else if (8 >= v) {
+        return 8;
+    } else if (16 >= v) {
+        return 16;
+    } else if (32 >= v) {
+        return 32;
+    } else if (64 >= v) {
+        return 64;
+    } else {
+        return 128;
+    }
+}
+
