@@ -1,16 +1,6 @@
 /* ****************************************
 
-  Ejemplo de función para generar un retraso
-  con precisón de microsegundos.
-  Si retraso es mayor que alcance del temporizador
-  se cuentan más de un disparo.
-  Utiliza el canal 6 del temporizador.
 
-  Copyright (C) Alberto F. Hamilton Castro
-  Dpto. de Ingeniería Informática de Sistemas
-  Universidad de La Laguna
-
-  Licencia: GPLv3
 
   *************************************** */
 
@@ -36,11 +26,4 @@ int main () {
 		serial_print("\nTerminó iteración\n");
 	}
 	// documentación que se pone por defecto en init_c
-	/*
-	pwm_set_channel(channel);
-    pwm_set_prescale(0);
-    pwm_set_alignment(0);
-    pwm_set_period(100);
-    pwm_set_duty(30);
-    */
 }

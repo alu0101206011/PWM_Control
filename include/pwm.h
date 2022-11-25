@@ -29,7 +29,8 @@
  *
  *  @param channel
  *  @param frecuency
- *  @param duty
+ *  @param period
+ *  @param per_duty
  *
  */
 void pwm_init(uint8_t channel, uint8_t frecuency, uint8_t period, uint8_t duty);

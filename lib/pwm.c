@@ -19,15 +19,15 @@ uint8_t percentage_flag = 0;
  *
  *  @param channel
  *  @param frecuency
- *  @param duty
+ *  @param per_duty
  *
  */
-void pwm_init(uint8_t channel, uint8_t frecuency, uint8_t period, uint8_t duty) {
+void pwm_init(uint8_t channel, uint8_t frecuency, uint8_t period, uint8_t per_duty) {
     pwm_set_frecuency(frecuency);
     pwm_set_channel(channel);
     pwm_set_alignment(0);
     pwm_set_period(period);
-    pwm_set_duty_percentage(20);
+    pwm_set_duty_percentage(per_duty);
 }
 
 /*! PWM init period and cycles
