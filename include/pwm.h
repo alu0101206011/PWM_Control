@@ -1,21 +1,18 @@
 /*!
  *  \brief     Control PWM Library
  *  \author    Anabel Díaz Labrador
- *  \date      22/11/2022
- *  \pre       Without trying
- *  \warning   
+ *  \date      25/11/2022
  *  \copyright GNU Public License.
- *  @file
  */
 
 #ifndef _PWM_H
 #define _PWM_H
 
 #include <types.h>
-#include <sys/param.h> // revisar
-#include <sys/interrupts.h> // revisar
-#include <sys/sio.h> // revisar
-#include <sys/locks.h> // revisar
+#include <sys/param.h>
+#include <sys/interrupts.h>
+#include <sys/sio.h>
+#include <sys/locks.h>
 
 /*! @defgroup pwm PWM Management
  *
@@ -23,39 +20,44 @@
  *
  */
 
-/*! PWM init Frecuency
+/*! PWM Initializer function by frecuency
  *
- *  @brief PWM initiator function by the frecuency.
+ *  @brief This function is responsible for initializing 
+ * PWM with some default parameters using frecuency: left alignment 
+ * and high polarity.
  *
- *  @param channel
- *  @param frecuency
- *  @param period
- *  @param per_duty
- *
- */
-void pwm_init(uint8_t channel, uint8_t frecuency, uint8_t period, uint8_t duty);
-
-/*! PWM init period and cycles
- *
- *  @brief PWM initiator function by the frecuency.
- *
- *  @param channel
- *  @param clock
- *  @param period
+ *  @param channel Chosen channel.
+ *  @param frecuency Frequency at which we want to see the clock. 
+ * This will use prescaler.
+ *  @param pwper Number of divisions in a cycle.
+ *  @param per_duty Duty percentage.
  *
  */
-void pwm_init_c(uint8_t channel, uint8_t period, uint8_t duty);
+void pwm_init(uint8_t channel, uint8_t frecuency, uint8_t pwper, uint8_t duty);
 
-/*! PWM polarity
+/*! PWM Initializer function
  *
- *  @brief Function to set the polarity (active high or active low).
+ *  @brief This function is responsible for initializing 
+ * PWM with some default parameters: left alignment,
+ * high polarity and zero prescale.
  *
- *  @param polarity Zero is active low and any other active high
+ *  @param channel Chosen channel.
+ *  @param pwper Number of divisions in a cycle.
+ *  @param duty Duty number.
+ *
+ */
+void pwm_init_c(uint8_t channel, uint8_t pwper, uint8_t duty);
+
+/*! PWM Set polarity
+ *
+ *  @brief Function to set the polarity.
+ *
+ *  @param polarity Zero is active low and any other active high.
  *
  */
 void pwm_set_polarity(uint8_t polarity);
 
-/*! PWM alignment
+/*! PWM Set alignment
  *
  *  @brief Function to set the alignment.
  *
@@ -65,67 +67,69 @@ void pwm_set_polarity(uint8_t polarity);
  */
 void pwm_set_alignment(uint8_t alignment);
 
-/*! PWM dty
+/*! PWM Set duty
  *
- *  @brief Function to set the dty.
+ *  @brief Function to set the duty.
  *
- *  @param n Dty number
+ *  @param duty Duty number.
  *
  */
 void pwm_set_duty(uint8_t n);
 
-/*! PWM percent
+/*! PWM Set duty percentage
  *
- *  @brief Function to set percentage that relates the dty and the period
+ *  @brief Function to set duty percentage that relates the duty 
+ * and the pwper.
  *
- *  @param percentage percentage
+ *  @param percentage Duty percentage.
  *
  */
 void pwm_set_duty_percentage(uint8_t percentage);
 
-/*! PWM percent
+/*! PWM Set pwper
  *
- *  @brief Function to set percentage that relates the dty and the period
+ *  @brief Function to set pwper.
  *
- *  @param percentage percentage
+ *  @param pwper Period number.
  *
  */
-void pwm_set_period(uint8_t period);
+void pwm_set_per(uint8_t pwper);
 
 /*! PWM Set channel
  *
- *  @brief Function to choose a channel and set the corresponding clock
- *
- *  @param channel
+ *  @brief Function to choose a channel. The global variables 
+ * addr_period and addr_duty are also assigned the ports according 
+ * to the chosen channel.
+ * 
+ *  @param channel Channel number.
  *
  */
 void pwm_set_channel(uint8_t channel);
 
 /*! PWM Set prescale
  *
- *  @brief Function to choose prescale
+ *  @brief Function to set prescale depending on the channel we are on.
+ * Clock A is used on ports 0 and 1. Clock B is used on ports 2 and 3.
  *
- *  @param prescale
+ *  @param prescale Must to be a value between 0 and 7 both inclusive.
  *
  */
 void pwm_set_prescale(uint8_t prescale);
 
-/*! PWM Set frecuency 
+/*! PWM Set frecuency
  *
- *  @brief Function to set frecuency
- *
- *  @param frecuency
+ *  @brief Function to set the frecuency using the prescaler.
+ * 
+ *  @param channel Frecuency number in kHz.
  * 
  */
 void pwm_set_frecuency(uint8_t frecuency);
 
-/*! PWM Upper power of two
+/*! PWM Get data
  *
- *  @brief Function to Upper power of two
+ *  @brief Function to get all PWM data.
  *
- *  @param value
- * 
  */
-uint8_t upper_power_of_two(uint8_t value);
+void pwm_get_data(void);
 
 #endif
